@@ -2,6 +2,7 @@
     "name": "alejosr/spaf",
     "description": "Simple PHP API Framework",
     "license": "MIT",
+    "type": "project",
     "require": {
         "php": "^8.0",
         "ext-intl": "*",
