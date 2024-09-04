@@ -12,7 +12,10 @@ class Filter{
         return true;
     }
 
-    public function after(Request $request, Response &$response, $arguments = NULL)
+    /**
+     * It must return 
+     */
+    public function after(Request $request, Response $response, $arguments = NULL)
     {
         return true;
     }
