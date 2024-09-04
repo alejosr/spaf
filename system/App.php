@@ -14,10 +14,14 @@ class App{
     private Request $request;
     private Response $response;
     public Router $routes;
-    
+
+    // DB Conn shared
     private $database;
+
+    // Actions of the route
     private $endpoint;
 
+    // Namespace for your App
     public String $appNamespace = "App\\";
 
     public function __construct(String $namespace = '')
@@ -30,11 +34,14 @@ class App{
         }
     }
 
+    /**
+     * Execute app after configuration
+     */
     public function run()
     {
         $this->initRequest();
 
-        if( $this->validRequest() ) {
+        if( $this->isValidRequest() ) {
             $this->executeRequest();
         } else {
             $this->response = new Response(Response::HTTP_NOT_FOUND);
@@ -43,11 +50,18 @@ class App{
         $this->sendResponse();
     }
 
+    /**
+     * Create request object
+     */
     protected function initRequest() {
         $this->request = new Request();
     }
 
-    private function validRequest()
+    /**
+     * Check if the request URI is on the routes
+     * The "endpoint" variable contains route resolution.
+     */
+    private function isValidRequest()
     {
         $this->endpoint = $this->routes->resolve($this->request->method, $this->request->uri);
         if(!is_null($this->endpoint)) {
@@ -56,6 +70,9 @@ class App{
         return false;
     }
 
+    /**
+     * Actions defined for the route
+     */
     private function executeRequest()
     {
         if($this->endpoint) {
@@ -76,6 +93,11 @@ class App{
         }
     }
 
+    /**
+     * Pre filters (Middleware) defined for the route
+     * If a pre-filter return a response => ends the execution,
+     * if return boolean != true, also ends.
+     */
     private function preProccessRequest()
     {
         if($this->endpoint['prefilters']) {
@@ -104,6 +126,9 @@ class App{
         return true;
     }
 
+    /**
+     * Execute the service implementation for the route
+     */
     private function processRequest()
     {
         $class = $this->appNamespace . "Services\\" . $this->endpoint['controller'];
@@ -120,6 +145,11 @@ class App{
         return $object->{$function}();
     }
 
+    /**
+     * Post filters for the route
+     * They could returno a Response object, ending the execution,
+     * or non True boolean with the same efect.
+     */
     private function postProcessRequest()
     {
         if($this->endpoint['postfilters']) {
@@ -146,6 +176,11 @@ class App{
         return true;
     }
 
+    /**
+     * Creates a simple PDO connection
+     * It would be better to have a connection library (with drivers)
+     * and not in the APP Class. However, for the moment the idea is to Keep-it-simple.
+     */
     public function connectDB(String $host='', String $name='', String $user='', String $pass='', Array $options=[])
     {
         if($this->database) {
@@ -179,6 +214,7 @@ class App{
             $options
         );
     }
+
 
     public function sendResponse()
     {
