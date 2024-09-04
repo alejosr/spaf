@@ -13,7 +13,7 @@
         "ext-curl": "If you use CURLRequest class",
         "ext-dom": "If you use TestResponse",
         "ext-pdo": "If you use MySQL",
-        "ext-redis": "If you use Cache class RedisHandler",
+        "ext-redis": "If you use Cache class RedisHandler"
     },
     "autoload": {
         "psr-4": {
