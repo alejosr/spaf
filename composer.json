@@ -1,0 +1,35 @@
+{
+    "name": "alejosr/spaf",
+    "description": "Simple PHP API Framework",
+    "license": "MIT",
+    "require": {
+        "php": "^8.0",
+        "ext-intl": "*",
+        "ext-json": "*",
+        "ext-mbstring": "*"
+    },
+    "suggest": {
+        "ext-curl": "If you use CURLRequest class",
+        "ext-dom": "If you use TestResponse",
+        "ext-pdo": "If you use MySQL",
+        "ext-redis": "If you use Cache class RedisHandler",
+    },
+    "autoload": {
+        "psr-4": {
+            "Spaf\\": "system/",
+            "App\\": "app/"
+        },
+        "files": [
+            "system/commons.php"
+        ]
+    },
+    "config": {
+        "optimize-autoloader": true,
+        "preferred-install": "dist",
+        "sort-packages": true
+    },
+    "scripts": {
+        "test": "phpunit",
+        "generate": "@composer dump-autoload"
+    }
+}
