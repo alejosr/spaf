@@ -18,7 +18,7 @@
     "autoload": {
         "psr-4": {
             "Spaf\\": "system/",
-            "App\\": "app/"
+            "AppExample\\": "app/"
         },
         "files": [
             "system/commons.php"
