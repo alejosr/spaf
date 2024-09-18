@@ -19,7 +19,7 @@ if(ENVIRONMENT != 'production') {
 // Ejecutamos la app
 use Spaf\App;
 
-$app = new Spaf\App('App\\');
+$app = new Spaf\App('AppExample\\');
 
 foreach (glob(ROOTDIR . "app/Config/*.php") as $filename) {
     require_once $filename;
